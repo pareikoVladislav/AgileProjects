@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from projects.models import ProjectFile
+from projects.serializers.project import ProjectShortInfoSerializer
 from utils import (
    check_extension,
    create_file_path,
@@ -62,3 +63,14 @@ class CreateProjectFileSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "File size is too large (2 MB as maximum)."
             )
+
+
+class ProjectFileDetailSerializer(serializers.ModelSerializer):
+    projects = ProjectShortInfoSerializer(many=True)
+    class Meta:
+        model = ProjectFile
+        fields = [
+            'name',
+            'created_at',
+            'projects'
+        ]
