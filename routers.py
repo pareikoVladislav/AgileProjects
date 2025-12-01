@@ -6,4 +6,5 @@ urlpatterns = [
     path('tasks/', include('projects.urls.task')),
     path('projects/', include('projects.urls.project')),
     path('project_files/', include('projects.urls.project_file')),
+    path('users/', include('users.urls')),
 ]
