@@ -3,6 +3,7 @@ from django.contrib import admin, messages
 from choices.task_statuses import Statuses
 from projects.models import Task
 
+
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ("title",
@@ -48,16 +49,16 @@ class TaskAdmin(admin.ModelAdmin):
         ("System Fields", {"fields": ("created_at", "updated_at", "deleted_at"), "classes": ("collapse",)}),
     )
 
-    actions = ['mark_as_blocked']
+actions = ['mark_as_blocked']
 
-    @admin.action(description="Перевести задачи в BLOCKED")
-    def mark_as_blocked(self, request, queryset):
-        updated = queryset.update(
-            status=Statuses.BLOCKED
-        )
+@admin.action(description="Перевести задачи в BLOCKED")
+def mark_as_blocked(self, request, queryset):
+    updated = queryset.update(
+        status=Statuses.BLOCKED
+    )
 
-        return self.message_user(
-            request,
-            "Successfully set 'BLOCKED' status for {} tasks".format(updated),
-            messages.SUCCESS
-        )
+    return self.message_user(
+        request,
+        "Successfully set 'BLOCKED' status for {} tasks".format(updated),
+        messages.SUCCESS
+    )
